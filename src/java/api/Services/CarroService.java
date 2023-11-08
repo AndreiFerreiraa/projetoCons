@@ -3,11 +3,14 @@ package api.Services;
 import api.ApplicationConfig;
 import api.Entity.Carro;
 import com.google.gson.Gson;
+import java.util.UUID;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -43,5 +46,20 @@ public class CarroService {
     public Response buscarTodosVeiculos() {
        return Response.status(200).entity(new Gson().toJson(ApplicationConfig.lista)).build();
     }
-
+    
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public Response deletarVeiculo(@PathParam("id") UUID id){
+        for (Carro carro: ApplicationConfig.lista){
+            if(carro.getId().equals(id)){
+            ApplicationConfig.lista.remove(carro);
+            return Response.status(200).build();
+            }
+        }
+        return Response.status(404).build();
+    }
+    
+    
+    
 }

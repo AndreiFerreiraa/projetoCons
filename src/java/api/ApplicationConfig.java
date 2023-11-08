@@ -19,6 +19,7 @@ public class ApplicationConfig extends Application {
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(api.Services.CarroService.class);
+        resources.add(api.Utils.CORSFilter.class);
     }
     
 }
